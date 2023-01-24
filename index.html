@@ -9,23 +9,25 @@
     <title>Weather Forecast</title>
 </head>
 <body>
-    <header class="container fluid ">
+    <header class="text-center p-2 text-white weather-dashboard">
         <h1>Weather Forecast</h1>
     </header>
-    <div>
-        <aside >
-            <h2>Search for a City:</h2>
-            <input type="text" id="cityInput" placeholder="Your city here">
-            <button class="btn" id="searchBtn">Search</button>
-            <ul id="search-history-container"></ul>
-        </aside>
-        <div class>
-            <div id="city-info"></div>
-            <div class="multi-day-forecast">
-                <h2>5-Day Forecast:</h2> 
-            </div>
-        </div>    
+    <div class="container fluid" style="max-width: 1400px">
+        <div class="row">
+            <aside class="col-lg-4 ">
+                <p class="city-container">Search for a City: <input type="text" id="city-input" placeholder="Your city here"></p>
+                <button type="submit" role="button" class="btn btn-primary" id="searchBtn">Search</button>
+                <hr class="aside-line" />
+                <ul class="list-group" id="search-history-container"></ul>
+            </aside>
+            <div class="col-lg-8 pb-4">
+                <section class="mt-5" role="region" aria-live="polite" id="current-day"></section>
+                <section class="mt-5" role="region" aria-live="polite" id="multi-day-forecast"></section>
+            </div>  
+        </div>  
     </div>
+    <script src="path/to/dayjs/dayjs.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/dayjs@1/plugin/utc.js"></script>
     <script src="./script.js"></script>
 </body>
 </html>

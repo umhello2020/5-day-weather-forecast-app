@@ -1,6 +1,15 @@
-let searchBtn = document.getElementById('searchBtn');
-let searchHistoryContainer = document.getElementById('search-history-container');
+// Global Variable
 let searchHistory = [];
+
+// DOM Variables
+let searchBtn = document.getElementById('searchBtn');
+let recentCityBtn = document.getElementById('recent-city-btn')
+let searchHistoryContainer = document.getElementById('search-history-container');
+let cityInputEl = document.getElementById('city-input');
+
+// Timezone pluggins for day.js
+dayjs.extend(window.js_plugin_utc);
+dayjs.extend(window.dayjs_plugin_timezone);
 
 function cityData(city) {
  fetch("https://api.openweathermap.org/geo/1.0/direct?q="+city+"&appid=5f03a7ebe75741bbe3cd6f91f18b0bd7")
@@ -38,28 +47,33 @@ function currentDay (lat, lon) {
 }
 
 function saveSearch (cityInput) {
-// grab input from search, and make sure it's not empty after trim
-// if 
-// once save newSearch grab 
-    let city = cityInput.value.trim();
+    let city = cityInput.value;
+    searchHistoryContainer.innerHTML = "";
+
     if (city !== '') {
         let searchHistory = JSON.parse(window.localStorage.getItem('searchHistory')) || [];
 
         searchHistory.push(city);
         window.localStorage.setItem('searchHistory', JSON.stringify(searchHistory));
     
-        for (let i = 0; i < searchHistory.length; i++) {
-            
+        for (let i = searchHistory.length - 1; i >=0; i--) {
+            let btn = document.createElement('button');
+            btn.setAttribute('type', 'button');
+            btn.setAttribute('id', 'recent-city-btn');
+
+            btn.textContent = searchHistory[i];
+            searchHistoryContainer.append(btn);
             
         }
     }
 }
 
 searchBtn.addEventListener('click', function(){
-    let cityInput = document.getElementById('cityInput').value;
+    let cityInput = document.getElementById('city-input').value;
     cityData(cityInput);
     saveSearch(cityInput);
 });
-
+ 
+recentCityBtn.addEventListener('click', function(){})
 
 // local storage function create an array and then create for loop inside with create button and append page

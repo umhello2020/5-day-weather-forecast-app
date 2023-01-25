@@ -1,4 +1,37 @@
+body {
+    margin: 0;
+    line-height: 1.5;
+    font-family: monospace;
+}
+
+.container {
+    font-size: 40px;
+}
+
+input {
+
+}
+
 .weather-dashboard {
     margin: 0;
     background-color: blue;
+}
+
+.search-container {
+    margin-top: 5px;
+}
+
+.btn {
+    display: inline-block;
+    text-align: center;
+    font-size: 25px;
+    width: 100%;
+}
+
+#recent-city-btn {
+    display: inline-block;
+    text-align: center;
+    text-decoration: none;
+    color: aliceblue;
+    background-color: rgb(108, 165, 214);
 }

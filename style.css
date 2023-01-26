@@ -1,4 +1,74 @@
+/* Elemental Selectors */
+body {
+    margin: 0;
+    line-height: 1.5;
+    font-family: monospace;
+}
+
+li {
+    list-style-type: none;
+}
+
+input {
+    font-size: 31px;
+}
+
+/* Container classes */
+.container {
+    font-size: 40px;
+    margin-left: 1rem;
+    margin-right: 0px;
+}
+
+.main {
+    text-align: center;
+}
+
 .weather-dashboard {
     margin: 0;
     background-color: blue;
 }
+
+.search-container {
+    margin-top: 5px;
+}
+
+.card {
+    border-radius: 15px 15px 15px 15px;
+    font-size: 20px;
+}
+
+/* Buttons */
+.btn {
+    display: inline-block;
+    text-align: center;
+    font-size: 25px;
+    width: 100%;
+}
+
+#history-btn {
+    display: inline-block;
+    text-align: center;
+    text-decoration: none;
+    color: aliceblue;
+    background-color: rgb(108, 165, 214);
+    margin: 0.5rem;
+}
+
+/* Weather related id selectors */
+#current-day {
+    border: solid gray 1px;
+    border-top-right-radius: 15px;
+    border-bottom-right-radius: 15px;
+    border-top-left-radius: 15px;
+    border-bottom-left-radius: 15px;
+}
+
+#mutli-day-forecast {
+    border: solid gray 1px;
+    border-top-right-radius: 15px;
+    border-bottom-right-radius: 15px;
+    border-top-left-radius: 15px;
+    border-bottom-left-radius: 15px;
+}
+

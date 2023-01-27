@@ -4,7 +4,8 @@
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/css/bootstrap.min.css" />
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/css/bootstrap.min.css"
+     rel="stylesheet" integrity="sha384-GLhlTQ8iRABdZLl6O3oVMWSktQOp6b7In1Zl3/Jr59b6EGGoI1aFkw7cmDA6j6gD" crossorigin="anonymous" >
     <link rel="stylesheet" href="./style.css" />
     <title>Weather Forecast</title>
 </head>
@@ -12,62 +13,77 @@
     <header class="text-center p-2 text-white weather-dashboard">
         <h1>Weather Forecast</h1>
     </header>
-    <div class="container">
+    <div class="container-fluid">
         <div class="row">
-            <aside class="col-lg-4 search-container">
-                <div class="city-container">Search for a City: <input type="text" id="city-input" placeholder="Your city here"></div>
-                <button type="submit" role="button" class="btn btn-primary" id="searchBtn">Search</button>
-                <hr class="aside-line" />
+            <aside class="col-lg-3 search-container">
+                <div class="city-container">
+                  <h2>Search for a City: </h2><input type="text" id="city-input" placeholder="Your city here">
+                  <button type="submit" role="button" class="btn btn-primary" id="searchBtn">Search</button>
+                  <hr class="aside-line" />
+                </div>
                 <ul class="list-group" id="search-history-container"></ul>
             </aside>
-            <div class="main col-lg-8 pb-4">
+            <div class="main col-lg-9 pb-4">
                 <section class="mt-5" role="region" aria-live="polite" id="current-day">
-                    <h2 id="city-name"></h2>
-                    <p id="load-screen">Awaiting your city search!</p>
+                    <h2 id="city-info">Awaiting your city search!</h2>
+                    <p id="temp"></p>
+                    <p id="wind"></p>
+                    <p id="humidity"></p>
                 </section>
                 <section class="mt-5" role="region" aria-live="polite" id="multi-day-forecast"> 
-                    <div class="card-group">
+                    <h2 id="forecast-h2">5-day Forecast</h2>
+                    <!-- <div class="card-group">
                         <div class="card">
                           <img src="..." class="card-img-top" alt="...">
                           <div class="card-body">
-                            <h5 class="card-title">Card title</h5>
-                            <p class="card-text">This is a wider card with supporting text below as a natural lead-in to additional content. This content is a little bit longer.</p>
+                            <h4 class="card-title"></h4>
+                            <p class="card-text" id="temp">Temp: </p>
+                            <p class="card-text" id="wind">Wind: </p>
+                            <p class="card-text" id="humidity">Humidity: </p>
                           </div>
                         </div>
                         <div class="card">
                           <img src="..." class="card-img-top" alt="...">
                           <div class="card-body">
-                            <h5 class="card-title">Card title</h5>
-                            <p class="card-text">This card has supporting text below as a natural lead-in to additional content.</p>
+                            <h4 class="card-title"></h4>
+                            <p class="card-text" id="temp">Temp: </p>
+                            <p class="card-text" id="wind">Wind: </p>
+                            <p class="card-text" id="humidity">Humidity: </p>
                           </div>
                         </div>
                         <div class="card">
                           <img src="..." class="card-img-top" alt="...">
                           <div class="card-body">
-                            <h5 class="card-title">Card title</h5>
-                            <p class="card-text"></p>
+                            <h4 class="card-title"></h4>
+                            <p class="card-text" id="temp">Temp: </p>
+                            <p class="card-text" id="wind">Wind: </p>
+                            <p class="card-text" id="humidity">Humidity: </p>
                           </div>
                         </div>
                         <div class="card">
                           <img src="..." class="card-img-top" alt="...">
                           <div class="card-body">
-                            <h5 class="card-title">Card title</h5>
-                            <p class="card-text"></p>
+                            <h4 class="card-title"></h4>
+                            <p class="card-text" id="temp">Temp: </p>
+                            <p class="card-text" id="wind">Wind: </p>
+                            <p class="card-text" id="humidity">Humidity: </p>
                           </div>
                         </div>
                         <div class="card">
                           <img src="..." class="card-img-top" alt="...">
                           <div class="card-body">
-                            <h5 class="card-title">Card title</h5>
-                            <p class="card-text">This is a wider card with supporting text below as a natural lead-in to additional content. This card has even longer content than the first to show that equal height action.</p>
+                            <h4 class="card-title"></h4>
+                            <p class="card-text" id="temp">Temp: </p>
+                            <p class="card-text" id="wind">Wind: </p>
+                            <p class="card-text" id="humidity">Humidity: </p>
                           </div>
-                        </div>
+                        </div> -->
                     </div>
                 </section>
             </div>  
         </div>  
     </div>
-    <!-- <script src="path/to/dayjs/dayjs.min.js"></script> -->
+    <script src="https://cdn.jsdelivr.net/npm/dayjs@1.11.7/dayjs.min.js"></script>
     <!-- <script src="https://cdnjs.cloudflare.com/ajax/libs/dayjs/1.10.4/plugin/utc.min.js"></script> -->
     <script src="./script.js"></script>
 </body>

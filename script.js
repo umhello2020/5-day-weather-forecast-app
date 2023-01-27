@@ -6,10 +6,8 @@ let searchBtn = document.getElementById('searchBtn');
 let searchHistoryContainer = document.getElementById('search-history-container');
 let cityInputEl = document.getElementById('city-input');
 let currentDayEl = document.getElementById('current-day');
+let cityInfo = document.getElementById('city-info');
 let multiForecast = document.getElementById('multi-day-forecast');
-let tempTodayEl = document.getElementById('temp-today');
-let humidityTodayEl = document.getElementById('humidity-today');
-let windTodayEl = document.getElementById('wind-today');
 
 // Plugins for timezones
 // dayjs.extend(window.js_plugin_utc);
@@ -26,12 +24,11 @@ function createHistoryBtn() {
     for (let i = 0; i < searchHistory.length; i++) {
         let liEl = document.createElement('li');
         let historyBtn = document.createElement('button');
-        historyBtn.setAttribute('type', 'button');
+        historyBtn.setAttribute('type', 'submit');
         historyBtn.setAttribute('id', 'history-btn');
         historyBtn.setAttribute('data-value', searchHistory[i]);
         historyBtn.addEventListener('click', function (e) {
             if (e.target.dataset.value === searchHistory[i]) {
-                console.log(e.target.dataset.value)
                 cityData(searchHistory[i]);
                 
                 cityInputEl.value = searchHistory[i];
@@ -55,8 +52,19 @@ function cityData(city) {
     .then(function(data) {
         let currentLat = data[0].lat
         let currentLon = data[0].lon
-        // currentDay(currentLat, currentLon)
+        currentDay(currentLat, currentLon)
         currentForecast(currentLat, currentLon);
+    })
+}
+
+function currentDay(lat, lon) {
+    fetch("https://api.openweathermap.org/data/2.5/weather?lat="+lat+"&lon="+lon+"&units=imperial&appid=5f03a7ebe75741bbe3cd6f91f18b0bd7")
+    .then(function (response) {
+        return response.json();
+      })
+    .then(function(data) {
+        let todaysInfo = data;
+        displayToday(todaysInfo);
     })
 }
 
@@ -66,43 +74,82 @@ function currentForecast(lat, lon) {
     .then(function (response) {
         return response.json();
       })
-    .then(function(data) {
-        let todaysInfo = data.list[0];
-        //displayToday(todaysInfo);
-        console.log(todaysInfo);
-        for (let i = 0; i < data.list.length; i+=8) {
-            
-        }
+    .then(function(data) { 
+        let forecastInfo = data.list;
+        displayForecast(forecastInfo);
     })
 }
 
 // Displays current dates weather information
-// function displayToday(todaysInfo) {
-//     // let date = dayjs().format('M/D/YYYY');
+function displayToday(todaysInfo) {
+    let date = dayjs().format('M/D/YYYY');
+    let tempEl = document.getElementById('temp');
+    let windEl = document.getElementById('wind');
+    let humidityEl = document.getElementById('humidity');
+    cityInfo.display = 'none';
 
-//     let cityName = document.getElementById('city-name');
-//     let city = cityInputEl.value
-//     cityName.innerHTML = city.toUpperCase();
+    let city = cityInputEl.value;
+    cityInfo.textContent = city + '   ' + date;
+    tempEl.textContent = 'Temp: ' + todaysInfo.main.temp + '°F';
+    windEl.textContent = 'Wind:' + todaysInfo.wind.speed + 'mph';
+    humidityEl.textContent = 'Humidity: ' + todaysInfo.main.humidity + '%';
 
-//     tempTodayEl.innerHTML = todaysInfo.main.temp + "°F"
-//     humidityTodayEl.innerHTML = todaysInfo.main.humidity + "%"
-//     windTodayEl.innerHTML = todaysInfo.wind.speed + " " + "mph"
-// }
+}
 
-// function displayForecast()
+// Displays 5-day forecast weather information
+function displayForecast(forecastInfo) {
+    let cardGroup = document.createElement('div');
+    cardGroup.setAttribute('class', 'card-group');
+
+    multiForecast.append(cardGroup);
+    //for loop to cycle through the five days at noon
+    for (let i = 4; i < forecastInfo.length; i+=8) {    
+        // create card elements 
+        let card = document.createElement('div');
+        let cardBody = document.createElement('div');
+        let cardTitle = document.createElement('h5');
+        // let weatherIcon = document.createElement('img');
+        let tempEl = document.createElement('p');
+        let windEl = document.createElement('p');
+        let humidityEl = document.createElement('p');
+
+        // append new elements
+        card.append(cardBody);
+        cardBody.append(cardTitle, tempEl, windEl, humidityEl);
+
+        // set classes for each new element
+        card.setAttribute('class', 'card');
+        cardBody.setAttribute('class', 'card-body');
+        cardTitle.setAttribute('class', 'card-title');
+        tempEl.setAttribute('class', 'card-text');
+        windEl.setAttribute('class', 'card-text');
+        humidityEl.setAttribute('class', 'card-text');
+
+
+        // display content onto cards
+        cardTitle.textContent = forecastInfo[i].dt_txt;
+        tempEl.textContent = 'Temp: ' + forecastInfo[i].main.temp + '°F';
+        windEl.textContent = 'Wind: ' + forecastInfo[i].wind.speed + 'mph';
+        humidityEl.textContent = 'Humidity: ' + forecastInfo[i].main.humidity + '%';
+
+        // append final card group
+        multiForecast.append(card);
+
+    }
+
+}
 
 
 function saveSearch (city) {
     let cityInput = city.trim();
     searchHistoryContainer.innerHTML = "";
 
-    if (cityInput !== '') {
-
+    if (cityInput !== '' && !searchHistory.includes(cityInput)) {
         searchHistory.push(cityInput);
         window.localStorage.setItem('searchHistory', JSON.stringify(searchHistory));
-    
-        createHistoryBtn();
     }
+
+    createHistoryBtn();
 }
 
 searchBtn.addEventListener('click', function(){

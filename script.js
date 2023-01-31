@@ -9,10 +9,6 @@ let currentDayEl = document.getElementById('current-day');
 let cityInfo = document.getElementById('city-info');
 let multiForecast = document.getElementById('multi-day-forecast');
 
-// Plugins for timezones
-// dayjs.extend(window.js_plugin_utc);
-// dayjs.extend(window.dayjs_plugin_timezone);
-
 // Loads search history to page upon load
 function onLoad () {
     searchHistoryContainer.innerHTML = '';
@@ -57,6 +53,7 @@ function cityData(city) {
     })
 }
 
+// Retrieves info for the current weather from coordinates
 function currentDay(lat, lon) {
     fetch("https://api.openweathermap.org/data/2.5/weather?lat="+lat+"&lon="+lon+"&units=imperial&appid=5f03a7ebe75741bbe3cd6f91f18b0bd7")
     .then(function (response) {
@@ -86,10 +83,20 @@ function displayToday(todaysInfo) {
     let tempEl = document.getElementById('temp');
     let windEl = document.getElementById('wind');
     let humidityEl = document.getElementById('humidity');
+    let iconLink = "https://openweathermap.org/img/w/"+ todaysInfo.weather[0].icon +".png";
+    let iconAlt = todaysInfo.weather[0].description || todaysInfo.main;
     cityInfo.display = 'none';
+
+    let iconEl = document.createElement('img');
+    iconEl.setAttribute('src', iconLink);
+    iconEl.setAttribute('alt', iconAlt);
+    iconEl.setAttribute('class', 'icon');
+    
 
     let city = cityInputEl.value;
     cityInfo.textContent = city + '   ' + date;
+    cityInfo.append(iconEl);
+
     tempEl.textContent = 'Temp: ' + todaysInfo.main.temp + '°F';
     windEl.textContent = 'Wind:' + todaysInfo.wind.speed + 'mph';
     humidityEl.textContent = 'Humidity: ' + todaysInfo.main.humidity + '%';
@@ -99,28 +106,40 @@ function displayToday(todaysInfo) {
 // Displays 5-day forecast weather information
 function displayForecast(forecastInfo) {
     let cardGroup = document.createElement('div');
+    let forecastHead = document.createElement('h2');
     cardGroup.setAttribute('class', 'card-group');
+    forecastHead.setAttribute('id', 'forecast-h2');
 
-    multiForecast.append(cardGroup);
+    forecastHead.textContent = '5-Day Forecast:';
+    multiForecast.innerHTML = '';
+
+    multiForecast.append(cardGroup, forecastHead);
     //for loop to cycle through the five days at noon
     for (let i = 4; i < forecastInfo.length; i+=8) {    
+        console.log(forecastInfo);
+       let iconLink = "https://openweathermap.org/img/w/"+ forecastInfo[i].weather[0].icon +".png";
+       let iconAlt = forecastInfo[i].weather[0].description || forecastInfo[i].main;
+
         // create card elements 
         let card = document.createElement('div');
         let cardBody = document.createElement('div');
         let cardTitle = document.createElement('h5');
-        // let weatherIcon = document.createElement('img');
+        let iconEl = document.createElement('img');
         let tempEl = document.createElement('p');
         let windEl = document.createElement('p');
         let humidityEl = document.createElement('p');
 
         // append new elements
         card.append(cardBody);
-        cardBody.append(cardTitle, tempEl, windEl, humidityEl);
+        cardBody.append(cardTitle, iconEl, tempEl, windEl, humidityEl);
 
         // set classes for each new element
         card.setAttribute('class', 'card');
         cardBody.setAttribute('class', 'card-body');
         cardTitle.setAttribute('class', 'card-title');
+        iconEl.setAttribute('src', iconLink);
+        iconEl.setAttribute('alt', iconAlt);
+        iconEl.setAttribute('class', 'icon');
         tempEl.setAttribute('class', 'card-text');
         windEl.setAttribute('class', 'card-text');
         humidityEl.setAttribute('class', 'card-text');
@@ -139,7 +158,7 @@ function displayForecast(forecastInfo) {
 
 }
 
-
+// Saves search to local storage
 function saveSearch (city) {
     let cityInput = city.trim();
     searchHistoryContainer.innerHTML = "";

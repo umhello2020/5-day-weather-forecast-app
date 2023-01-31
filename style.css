@@ -9,10 +9,6 @@ li {
     list-style-type: none;
 }
 
-input {
-    font-size: 31px;
-}
-
 /* Container classes */
 .container-fluid {
     font-size: 40px;
@@ -40,19 +36,18 @@ input {
     margin-top: 50px;
 }
 
+/* Card classes */
 .card {
     border: solid gray 1px;
     border-radius: 15px 15px 15px 15px;
     font-size: 20px;
+    
 }
 
-.card-body {
+/* .card-body {
     width: ;
-}
+} */
 
-.hide {
-    display: none;
-}
 
 /* Buttons */
 .btn {
@@ -77,7 +72,7 @@ input {
     background-color: rgb(52, 128, 194);
 }
 
-/* Weather related id selectors */
+/* Weather container id selectors */
 #current-day {
     border: solid gray 1px;
     border-radius: 15px 15px 15px 15px;

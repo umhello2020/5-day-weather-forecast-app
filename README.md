@@ -4,7 +4,7 @@
 This project was not based on starter code and was built from scratch. This is a site showcasing the weather for the current day and a five day forecast based on the city the user inputs. I found this project to be a lot more in depth and difficult than any of the other projects that I have made before. I hope that what I have done so far will help any others further their own development.
 
 ## Link
-Here is a link to the deployed site:
+Here is a link to the deployed site: https://umhello2020.github.io/5-day-weather-forecast-app/
 
 ## Visuals
 
